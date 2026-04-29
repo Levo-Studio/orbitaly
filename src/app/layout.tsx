@@ -5,21 +5,21 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
-const ogImageUrl = "https://chat.orbitaly.de/orbital-og-image.png?v=20260429-1";
+const ogImageUrl = "https://orbitaly.de/orbitaly-og-image.png?v=20260429-3";
 
 export const metadata: Metadata = {
   title: "Orbitaly — Independent Matrix Communication",
   description:
     "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
   alternates: {
-    canonical: "https://chat.orbitaly.de"
+    canonical: "https://orbitaly.de"
   },
   openGraph: {
     locale: "en_US",
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
-    url: "https://chat.orbitaly.de",
+    url: "https://orbitaly.de",
     siteName: "Orbitaly",
     type: "website",
     images: [
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     "og:image:height": "630",
     "og:image:type": "image/png"
   },
-  metadataBase: new URL("https://chat.orbitaly.de")
+  metadataBase: new URL("https://orbitaly.de")
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): ReactElement {
