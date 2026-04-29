@@ -26,5 +26,5 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/start.cjs ./start.cjs
 
 EXPOSE 3017
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:3017/ >/dev/null || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD node -e "const http=require('node:http');const req=http.get('http://127.0.0.1:3017/',res=>process.exit(res.statusCode<500?0:1));req.on('error',()=>process.exit(1));req.setTimeout(4000,()=>{req.destroy();process.exit(1);});"
 CMD ["node", "start.cjs"]
