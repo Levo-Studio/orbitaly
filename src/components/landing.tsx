@@ -3,7 +3,7 @@
 import { useState, type ReactElement, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   CircleCheck,
@@ -566,20 +566,21 @@ export const FAQ = (): ReactElement => {
                   }`}
                 />
               </button>
-              <AnimatePresence initial={false}>
-                {isOpen ? (
-                  <motion.div
-                    key={item.q}
-                    initial={{ height: 0, opacity: 0, y: -6 }}
-                    animate={{ height: "auto", opacity: 1, y: 0 }}
-                    exit={{ height: 0, opacity: 0, y: -6 }}
-                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
+              <div
+                className={`grid transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <p
+                    className={`pb-5 pt-0 text-sm leading-relaxed text-white/75 transition-transform duration-500 ${
+                      isOpen ? "translate-y-0" : "-translate-y-1"
+                    }`}
                   >
-                    <p className="pb-5 pt-0 text-sm leading-relaxed text-white/75">{item.a}</p>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
+                    {item.a}
+                  </p>
+                </div>
+              </div>
             </article>
           );
         })}
