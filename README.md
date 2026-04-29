@@ -6,7 +6,7 @@
 
 <p align="center"><strong>Independent Matrix-based communication.</strong></p>
 
-<h2 align="center"><strong>Independent Matrix-based communication.</strong></h2>
+<h2 align="center"><strong>A PRODUCT BY LEVO STUDIO</strong></h2>
 
 Orbitaly is a private, independent Matrix-based communication platform for friend groups, communities, and teams that want more control than closed social apps.
 
