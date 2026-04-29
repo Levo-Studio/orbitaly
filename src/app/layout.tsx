@@ -11,20 +11,20 @@ export const metadata: Metadata = {
   description:
     "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
   alternates: {
-    canonical: "https://chat.orbitaly.de"
+    canonical: "https://orbitaly.de"
   },
   openGraph: {
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
-    url: "https://chat.orbitaly.de",
+    url: "https://orbitaly.de",
     siteName: "Orbitaly",
     type: "website",
     images: [
       {
-        url: "/orbital-logo-rectangle.png?v=2",
+        url: "https://orbitaly.de/orbital-og-image.png?v=4",
         width: 1200,
-        height: 1200,
+        height: 630,
         alt: "Orbitaly"
       }
     ]
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
-    images: ["/orbital-logo-rectangle.png?v=2"]
+    images: ["https://orbitaly.de/orbital-og-image.png?v=4"]
   },
-  metadataBase: new URL("https://chat.orbitaly.de")
+  metadataBase: new URL("https://orbitaly.de")
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>): ReactElement {
