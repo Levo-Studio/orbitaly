@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-[#05070d] text-white antialiased;
+}
+
+.orb-grid {
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(67, 120, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 82% 25%, rgba(126, 87, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(34, 164, 255, 0.12), transparent 35%);
+}
+
+.glass {
+  @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+}
+
+.section-wrap {
+  @apply mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12;
+}
+
+@keyframes faq-expand {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes faq-collapse {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.animate-faq-expand {
+  animation: faq-expand 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-faq-collapse {
+  animation: faq-collapse 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+}
