@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/orbital-logo-rectangle.png?v=2",
+        url: "/orbital-og-image.png?v=3",
         width: 1200,
-        height: 1200,
+        height: 630,
         alt: "Orbitaly"
       }
     ]
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
-    images: ["/orbital-logo-rectangle.png?v=2"]
+    images: ["/orbital-og-image.png?v=3"]
   },
   metadataBase: new URL("https://chat.orbitaly.de")
 };
