@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     canonical: "https://chat.orbitaly.de"
   },
   openGraph: {
+    locale: "en_US",
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
@@ -22,10 +23,12 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/orbital-og-image.png?v=3",
+        url: "https://chat.orbitaly.de/orbital-og-image.png",
+        secureUrl: "https://chat.orbitaly.de/orbital-og-image.png",
         width: 1200,
         height: 630,
-        alt: "Orbitaly"
+        type: "image/png",
+        alt: "Orbitaly OG preview badge"
       }
     ]
   },
@@ -34,7 +37,14 @@ export const metadata: Metadata = {
     title: "Orbitaly — Independent Matrix Communication",
     description:
       "Orbitaly is a private Matrix-based communication space for secure chats, groups and independent communities.",
-    images: ["/orbital-og-image.png?v=3"]
+    images: ["https://chat.orbitaly.de/orbital-og-image.png"]
+  },
+  other: {
+    "og:image": "https://chat.orbitaly.de/orbital-og-image.png",
+    "og:image:secure_url": "https://chat.orbitaly.de/orbital-og-image.png",
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:type": "image/png"
   },
   metadataBase: new URL("https://chat.orbitaly.de")
 };
