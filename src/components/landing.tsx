@@ -1,9 +1,9 @@
 "use client";
 
-import type { ReactElement, ReactNode } from "react";
+import { useState, type ReactElement, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   CircleCheck,
@@ -16,11 +16,11 @@ import {
   Shield,
   Sparkles,
   Users,
-  Waypoints
+  Waypoints,
+  ChevronDown
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { WorkflowScroll } from "@/components/workflow-scroll";
 
 const navItems: Array<{ label: string; href: string }> = [
@@ -542,18 +542,47 @@ export const ComingSoon = (): ReactElement => {
 };
 
 export const FAQ = (): ReactElement => {
+  const [openItem, setOpenItem] = useState<string | null>(faqItems[0]?.q ?? null);
+
   return (
     <section className="section-wrap py-20" id="faq">
       <h2 className="text-2xl font-semibold text-white sm:text-3xl">FAQ</h2>
       <div className="mt-6 glass rounded-2xl px-6">
-        <Accordion type="single" collapsible>
-          {faqItems.map((item) => (
-            <AccordionItem key={item.q} value={item.q}>
-              <AccordionTrigger className="transition-all duration-300 data-[state=open]:text-blue-200">{item.q}</AccordionTrigger>
-              <AccordionContent>{item.a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        {faqItems.map((item) => {
+          const isOpen = openItem === item.q;
+
+          return (
+            <article key={item.q} className="border-b border-white/10">
+              <button
+                type="button"
+                className="group flex w-full items-center justify-between py-5 text-left text-base font-medium text-white transition-colors hover:text-blue-200"
+                onClick={() => setOpenItem(isOpen ? null : item.q)}
+                aria-expanded={isOpen}
+              >
+                <span className={isOpen ? "text-blue-200" : ""}>{item.q}</span>
+                <ChevronDown
+                  className={`h-4 w-4 shrink-0 text-white/60 transition-transform duration-500 ${
+                    isOpen ? "rotate-180 text-blue-200" : ""
+                  }`}
+                />
+              </button>
+              <AnimatePresence initial={false}>
+                {isOpen ? (
+                  <motion.div
+                    key={item.q}
+                    initial={{ height: 0, opacity: 0, y: -6 }}
+                    animate={{ height: "auto", opacity: 1, y: 0 }}
+                    exit={{ height: 0, opacity: 0, y: -6 }}
+                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="pb-5 pt-0 text-sm leading-relaxed text-white/75">{item.a}</p>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
