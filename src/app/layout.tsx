@@ -5,7 +5,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
-const ogImageUrl = "https://orbitaly.de/orbitaly-og-image.png?v=20260429-3";
+const ogImageUrl = "https://orbitaly.de/orbitaly-og-image.png?v=20260429-4";
 
 export const metadata: Metadata = {
   title: "Orbitaly — Independent Matrix Communication",
