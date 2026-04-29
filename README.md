@@ -1,8 +1,10 @@
-![Orbitaly Logo](./public/orbital-logo-rectangle-120.png)
+<p align="center">
+  <img src="./public/orbital-logo-rectangle-120.png" alt="Orbitaly Logo" width="120" height="120" />
+</p>
 
-# Orbitaly
+<h1 align="center">Orbitaly</h1>
 
-**Independent Matrix-based communication.**
+<p align="center"><strong>Independent Matrix-based communication.</strong></p>
 
 ## A PRODUCT BY LEVO STUDIO
 
