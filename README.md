@@ -52,6 +52,7 @@ Recommended clients:
 - [Element Web](https://app.element.io)
 - [FluffyChat Web](https://fluffychat.im/web)
 - [Cinny Web](https://app.cinny.in)
+- [NeoChat](https://apps.kde.org/neochat/)
 
 ## Infrastructure & Privacy Notes
 

@@ -35,14 +35,15 @@ const navItems: Array<{ label: string; href: string }> = [
 const clientLinks: Array<{ name: string; href: string; description: string }> = [
   { name: "Element", href: "https://app.element.io", description: "Best all-rounder · Web, desktop and mobile" },
   { name: "FluffyChat", href: "https://fluffychat.im/web", description: "Friendly and simple · Mobile-focused" },
-  { name: "Cinny", href: "https://app.cinny.in", description: "Clean web experience · Lightweight and modern" }
+  { name: "Cinny", href: "https://app.cinny.in", description: "Clean web experience · Lightweight and modern" },
+  { name: "NeoChat", href: "https://apps.kde.org/neochat/", description: "KDE Matrix client · Desktop and mobile" }
 ];
 
 const faqItems: Array<{ q: string; a: string }> = [
   { q: "What is Orbitaly?", a: "Orbitaly is a private, independent Matrix homeserver for chats, groups and communities." },
   { q: "What is a Matrix homeserver?", a: "A homeserver stores your Matrix identity and rooms while staying interoperable with other Matrix servers." },
-  { q: "Do I need a special app?", a: "No. Orbitaly does not have its own custom client yet. Use existing Matrix clients like Element, FluffyChat, or Cinny." },
-  { q: "Which client should I use?", a: "Element is a strong default, FluffyChat is great on mobile, and Cinny is excellent for a clean web-focused flow." },
+  { q: "Do I need a special app?", a: "No. Orbitaly does not have its own custom client yet. Use existing Matrix clients like Element, FluffyChat, Cinny, or NeoChat." },
+  { q: "Which client should I use?", a: "Element is a strong default, FluffyChat is great on mobile, Cinny is excellent for a clean web-focused flow, and NeoChat is a great KDE-native option." },
   { q: "Is Orbitaly the same as WhatsApp?", a: "No. WhatsApp is a centralized product, while Orbitaly runs on the open Matrix protocol with client choice." },
   { q: "Are messages encrypted?", a: "Native Matrix encrypted rooms can protect message content end-to-end when encryption is enabled." },
   {
@@ -282,7 +283,7 @@ export const MatrixExplanation = (): ReactElement => {
           <ul className="mt-6 space-y-3 text-sm text-white/75">
             <li>Homeserver: <span className="text-blue-200">chat.orbitaly.de</span></li>
             <li>Matrix ID example: <span className="text-blue-200">@name:chat.orbitaly.de</span></li>
-            <li>Works with Element, FluffyChat, Cinny and other Matrix clients</li>
+            <li>Works with Element, FluffyChat, Cinny, NeoChat and other Matrix clients</li>
             <li>Designed for private groups, friends and independent communities</li>
           </ul>
         </motion.div>
@@ -310,7 +311,7 @@ export const MatrixExplanation = (): ReactElement => {
           the colon is your username. The part after the colon is your homeserver.
         </p>
         <p className="mt-3 text-white/75">
-          To add friends, share your full Matrix ID or search theirs in your client (Element, FluffyChat, or Cinny),
+          To add friends, share your full Matrix ID or search theirs in your client (Element, FluffyChat, Cinny, or NeoChat),
           then start a direct message or invite them into a private room.
         </p>
       </motion.div>
@@ -399,7 +400,7 @@ const GraphSide = ({ centralized }: { centralized: boolean }): ReactElement => {
 
 export const Workflow = (): ReactElement => {
   const steps = [
-    "Choose a Matrix client: Element, FluffyChat, or Cinny.",
+    "Choose a Matrix client: Element, FluffyChat, Cinny, or NeoChat.",
     "Enter the homeserver URL: https://chat.orbitaly.de",
     "Create your account with username and password.",
     "Your Matrix ID becomes @yourname:chat.orbitaly.de. Share this ID so friends can find you.",
@@ -422,18 +423,18 @@ export const Workflow = (): ReactElement => {
   );
 };
 
-type ClientCardProps = { title: string; blurb: string; href: string; cta: string };
+type ClientCardProps = {
+  title: string;
+  blurb: string;
+  href: string;
+  cta: string;
+  appStoreHref?: string;
+  playStoreHref?: string;
+  note?: string;
+};
 
-export const ClientCard = ({ title, blurb, href, cta }: ClientCardProps): ReactElement => {
-  const isCinny = title === "Cinny";
-  const appStoreHref =
-    title === "Element"
-      ? "https://apps.apple.com/app/element-messenger/id1083446067"
-      : "https://apps.apple.com/us/app/fluffychat/id1551469600";
-  const playStoreHref =
-    title === "Element"
-      ? "https://play.google.com/store/apps/details?id=im.vector.app"
-      : "https://play.google.com/store/apps/details?id=chat.fluffy.fluffychat";
+export const ClientCard = ({ title, blurb, href, cta, appStoreHref, playStoreHref, note }: ClientCardProps): ReactElement => {
+  const hasStoreLinks = typeof appStoreHref === "string" && typeof playStoreHref === "string";
 
   return (
     <motion.article
@@ -447,7 +448,7 @@ export const ClientCard = ({ title, blurb, href, cta }: ClientCardProps): ReactE
           {cta} <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
       </Button>
-      {!isCinny ? (
+      {hasStoreLinks ? (
         <div className="mt-4 flex flex-wrap gap-2 text-xs">
           <Link
             href={appStoreHref}
@@ -467,7 +468,7 @@ export const ClientCard = ({ title, blurb, href, cta }: ClientCardProps): ReactE
           </Link>
         </div>
       ) : (
-        <p className="mt-4 text-xs text-white/60">Cinny currently offers a web-first experience.</p>
+        <p className="mt-4 text-xs text-white/60">{note ?? "Client-specific install options are available on the official page."}</p>
       )}
     </motion.article>
   );
@@ -478,10 +479,37 @@ export const Clients = (): ReactElement => {
     <section className="section-wrap py-20" id="clients">
       <h2 className="text-2xl font-semibold text-white sm:text-3xl">Supported clients</h2>
       <p className="mt-3 text-white/75">Orbitaly provides the server. You choose the client.</p>
-      <div className="mt-8 grid gap-5 md:grid-cols-3">
-        <ClientCard title="Element" blurb="Best all-rounder. Web, desktop and mobile." href="https://app.element.io" cta="Open Element Web App" />
-        <ClientCard title="FluffyChat" blurb="Friendly, simple and mobile-focused." href="https://fluffychat.im/web" cta="Open FluffyChat Web App" />
-        <ClientCard title="Cinny" blurb="Clean web experience. Lightweight and modern." href="https://app.cinny.in" cta="Open Cinny Web App" />
+      <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <ClientCard
+          title="Element"
+          blurb="Best all-rounder. Web, desktop and mobile."
+          href="https://app.element.io"
+          cta="Open Element Web App"
+          appStoreHref="https://apps.apple.com/app/element-messenger/id1083446067"
+          playStoreHref="https://play.google.com/store/apps/details?id=im.vector.app"
+        />
+        <ClientCard
+          title="FluffyChat"
+          blurb="Friendly, simple and mobile-focused."
+          href="https://fluffychat.im/web"
+          cta="Open FluffyChat Web App"
+          appStoreHref="https://apps.apple.com/us/app/fluffychat/id1551469600"
+          playStoreHref="https://play.google.com/store/apps/details?id=chat.fluffy.fluffychat"
+        />
+        <ClientCard
+          title="Cinny"
+          blurb="Clean web experience. Lightweight and modern."
+          href="https://app.cinny.in"
+          cta="Open Cinny Web App"
+          note="Cinny currently offers a web-first experience."
+        />
+        <ClientCard
+          title="NeoChat"
+          blurb="KDE Matrix client for desktop and mobile users."
+          href="https://apps.kde.org/neochat/"
+          cta="Open NeoChat"
+          note="NeoChat install options are listed on the official KDE page."
+        />
       </div>
     </section>
   );
@@ -632,6 +660,7 @@ export const Footer = (): ReactElement => {
           <Link href="https://app.element.io" target="_blank" rel="noreferrer">Element Web</Link>
           <Link href="https://fluffychat.im/web" target="_blank" rel="noreferrer">FluffyChat Web</Link>
           <Link href="https://app.cinny.in" target="_blank" rel="noreferrer">Cinny Web</Link>
+          <Link href="https://apps.kde.org/neochat/" target="_blank" rel="noreferrer">NeoChat</Link>
         </div>
       </div>
       <p className="section-wrap mt-4 text-xs font-semibold tracking-wide text-white/60">
