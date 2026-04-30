@@ -81,52 +81,52 @@ const clientRecommendationMap: Record<ClientId, { name: string; reason: string; 
 
 const clientQuizQuestions: QuizQuestion[] = [
   {
-    prompt: "Which device do you use most for chat?",
+    prompt: "Where do you chat the most?",
     options: [
       {
-        label: "Mostly phone",
+        label: "On my phone",
         scores: { "element-x": 1, fluffychat: 3, cinny: 0, neochat: 1, schildichat: 1 }
       },
       {
-        label: "Mostly laptop/desktop browser",
+        label: "On my laptop/desktop",
         scores: { "element-x": 1, fluffychat: 0, cinny: 3, neochat: 1, schildichat: 1 }
       },
       {
-        label: "I switch across all devices",
+        label: "On both equally",
         scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 1, schildichat: 2 }
       }
     ]
   },
   {
-    prompt: "What matters most to you?",
+    prompt: "What is most important to you?",
     options: [
       {
-        label: "Simple and easy UI",
+        label: "Very simple and easy",
         scores: { "element-x": 1, fluffychat: 3, cinny: 2, neochat: 1, schildichat: 0 }
       },
       {
-        label: "Most complete feature set",
+        label: "Most features",
         scores: { "element-x": 3, fluffychat: 0, cinny: 1, neochat: 1, schildichat: 2 }
       },
       {
-        label: "Lightweight and fast web usage",
+        label: "Fast and lightweight",
         scores: { "element-x": 1, fluffychat: 1, cinny: 3, neochat: 0, schildichat: 1 }
       }
     ]
   },
   {
-    prompt: "Which style fits you best?",
+    prompt: "Which look and feel do you prefer?",
     options: [
       {
-        label: "Modern all-rounder",
+        label: "Modern and balanced",
         scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 0, schildichat: 1 }
       },
       {
-        label: "KDE/native desktop feeling",
+        label: "Native KDE-style app",
         scores: { "element-x": 0, fluffychat: 0, cinny: 1, neochat: 3, schildichat: 0 }
       },
       {
-        label: "Classic power-user layout",
+        label: "Classic power-user style",
         scores: { "element-x": 1, fluffychat: 0, cinny: 1, neochat: 0, schildichat: 3 }
       }
     ]
@@ -617,44 +617,8 @@ export const Clients = (): ReactElement => {
 };
 
 export const ClientComparison = (): ReactElement => {
-  const [questionIndex, setQuestionIndex] = useState<number>(0);
-  const [scores, setScores] = useState<Record<ClientId, number>>({
-    "element-x": 0,
-    fluffychat: 0,
-    cinny: 0,
-    neochat: 0,
-    schildichat: 0
-  });
-
-  const currentQuestion = clientQuizQuestions[questionIndex];
-  const isQuizComplete = questionIndex >= clientQuizQuestions.length;
-  const bestClientId: ClientId = (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] as ClientId) ?? "element-x";
-  const bestClient = clientRecommendationMap[bestClientId];
-
-  const handleOptionSelect = (option: QuizOption): void => {
-    setScores((prevScores) => {
-      const nextScores: Record<ClientId, number> = { ...prevScores };
-      (Object.keys(option.scores) as ClientId[]).forEach((key) => {
-        nextScores[key] += option.scores[key];
-      });
-      return nextScores;
-    });
-    setQuestionIndex((prev) => prev + 1);
-  };
-
-  const resetQuiz = (): void => {
-    setQuestionIndex(0);
-    setScores({
-      "element-x": 0,
-      fluffychat: 0,
-      cinny: 0,
-      neochat: 0,
-      schildichat: 0
-    });
-  };
-
   return (
-    <section className="section-wrap py-24">
+    <section className="section-wrap py-24 pb-28">
       <motion.div {...reveal} className="glass rounded-3xl p-8 sm:p-10">
         <h2 className="text-2xl font-semibold text-white sm:text-3xl">Client comparison</h2>
         <p className="mt-3 max-w-4xl text-white/75">
@@ -685,23 +649,87 @@ export const ClientComparison = (): ReactElement => {
             <p className="mt-4 text-xs text-white/65">Use this when you prefer a focused web client on laptop/desktop.</p>
           </motion.article>
         </div>
+      </motion.div>
+    </section>
+  );
+};
 
-        <motion.article
-          {...reveal}
-          className="mt-10 rounded-2xl border border-white/15 bg-white/[0.03] p-6 sm:p-8"
-        >
+export const FindYourClient = (): ReactElement => {
+  const [questionIndex, setQuestionIndex] = useState<number>(0);
+  const [scores, setScores] = useState<Record<ClientId, number>>({
+    "element-x": 0,
+    fluffychat: 0,
+    cinny: 0,
+    neochat: 0,
+    schildichat: 0
+  });
+
+  const currentQuestion = clientQuizQuestions[questionIndex];
+  const isQuizComplete = questionIndex >= clientQuizQuestions.length;
+  const progressWidth = `${Math.min((questionIndex / clientQuizQuestions.length) * 100, 100)}%`;
+  const bestClientId: ClientId = (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] as ClientId) ?? "element-x";
+  const bestClient = clientRecommendationMap[bestClientId];
+
+  const handleOptionSelect = (option: QuizOption): void => {
+    setScores((prevScores) => {
+      const nextScores: Record<ClientId, number> = { ...prevScores };
+      (Object.keys(option.scores) as ClientId[]).forEach((key) => {
+        nextScores[key] += option.scores[key];
+      });
+      return nextScores;
+    });
+    setQuestionIndex((prev) => prev + 1);
+  };
+
+  const resetQuiz = (): void => {
+    setQuestionIndex(0);
+    setScores({
+      "element-x": 0,
+      fluffychat: 0,
+      cinny: 0,
+      neochat: 0,
+      schildichat: 0
+    });
+  };
+
+  return (
+    <section className="section-wrap pb-24">
+      <motion.div
+        {...reveal}
+        className="relative overflow-hidden rounded-3xl border border-blue-300/20 bg-[linear-gradient(180deg,rgba(24,35,70,0.5),rgba(9,13,28,0.85))] p-8 shadow-[0_18px_60px_rgba(15,44,112,0.35)] sm:p-10"
+      >
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl"
+          animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.9, 0.6] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-20 -left-20 h-52 w-52 rounded-full bg-violet-500/20 blur-3xl"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.article className="relative rounded-2xl border border-white/15 bg-[#050a19]/65 p-6 sm:p-8">
           <h3 className="text-xl font-semibold text-white sm:text-2xl">Find your client</h3>
           <p className="mt-2 text-sm text-white/70">
-            Answer a few quick multiple-choice questions and get your best fit. You can use any recommendation with the Orbitaly homeserver:
+            Answer a few simple questions and get your best match. You can use any recommendation with the Orbitaly homeserver:
             <span className="ml-1 font-medium text-blue-200">https://chat.orbitaly.de</span>.
           </p>
+          <div className="mt-5 h-2 w-full rounded-full bg-white/10">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
+              animate={{ width: progressWidth }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            />
+          </div>
 
-          <div className="mt-6 overflow-hidden">
+          <div className="mt-6 pb-2">
             <motion.div
               key={isQuizComplete ? "result" : `q-${questionIndex}`}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {isQuizComplete ? (
                 <div className="space-y-5">
@@ -711,13 +739,13 @@ export const ClientComparison = (): ReactElement => {
                   <p className="text-sm text-white/75">
                     Cross-platform sync works across clients, so you can chat on FluffyChat on your phone and continue in Cinny on your laptop with the same account and rooms.
                   </p>
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild>
+                  <div className="flex flex-wrap items-center gap-3 pb-1">
+                    <Button asChild className="min-w-[190px]">
                       <Link href={bestClient.href} target="_blank" rel="noreferrer">
                         Open {bestClient.name} <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button type="button" variant="secondary" onClick={resetQuiz}>
+                    <Button type="button" variant="secondary" className="min-w-[140px]" onClick={resetQuiz}>
                       Try again
                     </Button>
                   </div>
@@ -730,15 +758,21 @@ export const ClientComparison = (): ReactElement => {
                   <h4 className="text-lg font-semibold text-white sm:text-xl">{currentQuestion.prompt}</h4>
                   <div className="grid gap-3">
                     {currentQuestion.options.map((option) => (
-                      <Button
+                      <motion.div
                         key={option.label}
-                        type="button"
-                        variant="secondary"
-                        className="justify-start text-left whitespace-normal"
-                        onClick={() => handleOptionSelect(option)}
+                        whileHover={{ y: -2, scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                       >
-                        {option.label}
-                      </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="h-auto w-full justify-start py-3 text-left whitespace-normal"
+                          onClick={() => handleOptionSelect(option)}
+                        >
+                          {option.label}
+                        </Button>
+                      </motion.div>
                     ))}
                   </div>
                 </div>

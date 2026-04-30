@@ -5,6 +5,7 @@ import {
   Clients,
   ComingSoon,
   FAQ,
+  FindYourClient,
   FinalCTA,
   Footer,
   Header,
@@ -25,6 +26,7 @@ export default function HomePage(): ReactElement {
       <Workflow />
       <Clients />
       <ClientComparison />
+      <FindYourClient />
       <Benefits />
       <SecuritySection />
       <ComingSoon />
