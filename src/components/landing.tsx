@@ -39,7 +39,7 @@ const clientLinks: Array<{ name: string; href: string; description: string }> = 
   { name: "NeoChat", href: "https://apps.kde.org/neochat/", description: "KDE Matrix client · Desktop and mobile" }
 ];
 
-type ClientId = "element-x" | "fluffychat" | "cinny" | "neochat" | "schildichat";
+type ClientId = "element-x" | "fluffychat" | "cinny";
 
 type QuizOption = {
   label: string;
@@ -66,16 +66,6 @@ const clientRecommendationMap: Record<ClientId, { name: string; reason: string; 
     name: "Cinny",
     reason: "Best if you prefer a clean, light chat app in your browser on laptop or desktop.",
     href: "https://app.cinny.in"
-  },
-  neochat: {
-    name: "NeoChat",
-    reason: "Good if you want a straightforward app-like feel on desktop and mobile.",
-    href: "https://apps.kde.org/neochat/"
-  },
-  schildichat: {
-    name: "SchildiChat",
-    reason: "Good if you like a classic chat layout with extra customization options.",
-    href: "https://schildi.chat"
   }
 };
 
@@ -85,15 +75,15 @@ const clientQuizQuestions: QuizQuestion[] = [
     options: [
       {
         label: "On my phone",
-        scores: { "element-x": 0, fluffychat: 4, cinny: 0, neochat: 1, schildichat: 1 }
+        scores: { "element-x": 0, fluffychat: 4, cinny: 0 }
       },
       {
         label: "On my laptop/desktop",
-        scores: { "element-x": 1, fluffychat: 0, cinny: 4, neochat: 1, schildichat: 1 }
+        scores: { "element-x": 1, fluffychat: 0, cinny: 4 }
       },
       {
         label: "On both equally",
-        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 1, schildichat: 1 }
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1 }
       }
     ]
   },
@@ -102,15 +92,15 @@ const clientQuizQuestions: QuizQuestion[] = [
     options: [
       {
         label: "Very simple and easy",
-        scores: { "element-x": 0, fluffychat: 4, cinny: 2, neochat: 1, schildichat: 0 }
+        scores: { "element-x": 0, fluffychat: 4, cinny: 2 }
       },
       {
         label: "Everything in one app",
-        scores: { "element-x": 4, fluffychat: 0, cinny: 1, neochat: 1, schildichat: 2 }
+        scores: { "element-x": 4, fluffychat: 0, cinny: 1 }
       },
       {
         label: "Fast and lightweight",
-        scores: { "element-x": 1, fluffychat: 1, cinny: 3, neochat: 0, schildichat: 1 }
+        scores: { "element-x": 1, fluffychat: 1, cinny: 3 }
       }
     ]
   },
@@ -119,15 +109,49 @@ const clientQuizQuestions: QuizQuestion[] = [
     options: [
       {
         label: "Modern and clean",
-        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 0, schildichat: 1 }
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1 }
       },
       {
         label: "Simple app style",
-        scores: { "element-x": 1, fluffychat: 2, cinny: 1, neochat: 2, schildichat: 0 }
+        scores: { "element-x": 1, fluffychat: 2, cinny: 1 }
       },
       {
-        label: "Classic style with more options",
-        scores: { "element-x": 1, fluffychat: 0, cinny: 1, neochat: 0, schildichat: 3 }
+        label: "Work-first and focused",
+        scores: { "element-x": 2, fluffychat: 0, cinny: 2 }
+      }
+    ]
+  },
+  {
+    prompt: "How do you usually chat?",
+    options: [
+      {
+        label: "Mostly 1:1 chats",
+        scores: { "element-x": 1, fluffychat: 3, cinny: 1 }
+      },
+      {
+        label: "A mix of chats and groups",
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1 }
+      },
+      {
+        label: "Mostly larger group rooms",
+        scores: { "element-x": 2, fluffychat: 0, cinny: 3 }
+      }
+    ]
+  },
+  {
+    prompt: "What sounds best for daily use?",
+    options: [
+      {
+        label: "Clean and simple",
+        scores: { "element-x": 1, fluffychat: 3, cinny: 2 }
+      },
+      {
+        label: "Balanced with lots of options",
+        scores: { "element-x": 3, fluffychat: 0, cinny: 1 }
+      },
+      {
+        label: "Very light in browser",
+        scores: { "element-x": 1, fluffychat: 1, cinny: 3 }
       }
     ]
   }
@@ -659,15 +683,14 @@ export const FindYourClient = (): ReactElement => {
   const [scores, setScores] = useState<Record<ClientId, number>>({
     "element-x": 0,
     fluffychat: 0,
-    cinny: 0,
-    neochat: 0,
-    schildichat: 0
+    cinny: 0
   });
 
   const currentQuestion = clientQuizQuestions[questionIndex];
   const isQuizComplete = questionIndex >= clientQuizQuestions.length;
-  const progressWidth = `${Math.min((questionIndex / clientQuizQuestions.length) * 100, 100)}%`;
-  const clientPriority: ClientId[] = ["fluffychat", "cinny", "element-x", "neochat", "schildichat"];
+  const progressPercent = isQuizComplete ? 100 : Math.min((questionIndex / clientQuizQuestions.length) * 100, 100);
+  const progressWidth = `${progressPercent}%`;
+  const clientPriority: ClientId[] = ["fluffychat", "cinny", "element-x"];
   const bestClientId: ClientId =
     clientPriority.reduce((best, current) => (scores[current] > scores[best] ? current : best), clientPriority[0]) ?? "element-x";
   const bestClient = clientRecommendationMap[bestClientId];
@@ -688,9 +711,7 @@ export const FindYourClient = (): ReactElement => {
     setScores({
       "element-x": 0,
       fluffychat: 0,
-      cinny: 0,
-      neochat: 0,
-      schildichat: 0
+      cinny: 0
     });
   };
 
@@ -718,12 +739,19 @@ export const FindYourClient = (): ReactElement => {
             Answer a few simple questions and get your best match. You can use any recommendation with the Orbitaly login URL:
             <span className="ml-1 font-medium text-blue-200">https://chat.orbitaly.de</span>.
           </p>
-          <div className="mt-5 h-2 w-full rounded-full bg-white/10">
+          <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-white/10">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
+              className="relative h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
               animate={{ width: progressWidth }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-            />
+            >
+              <motion.span
+                aria-hidden
+                className="absolute inset-y-0 block w-20 bg-white/35 blur-sm"
+                animate={{ x: ["-130%", "420%"] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
+              />
+            </motion.div>
           </div>
 
           <div className="mt-6 pb-2">
