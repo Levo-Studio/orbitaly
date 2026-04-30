@@ -29,7 +29,7 @@ const navItems: Array<{ label: string; href: string }> = [
   { label: "Clients", href: "#clients" },
   { label: "Security", href: "#security" },
   { label: "FAQ", href: "#faq" },
-  { label: "Get Started", href: "#get-started" }
+  { label: "Get Started", href: "https://app.orbitaly.de" }
 ];
 
 const clientLinks: Array<{ name: string; href: string; description: string }> = [
@@ -120,11 +120,18 @@ type SmoothAnchorProps = {
 };
 
 const SmoothAnchor = ({ href, className, children }: SmoothAnchorProps): ReactElement => {
+  const isExternalLink = href.startsWith("http://") || href.startsWith("https://");
+
   return (
     <a
       href={href}
       className={className}
+      target={isExternalLink ? "_blank" : undefined}
+      rel={isExternalLink ? "noreferrer" : undefined}
       onClick={(event) => {
+        if (isExternalLink) {
+          return;
+        }
         event.preventDefault();
         scrollToId(href);
       }}
@@ -168,7 +175,7 @@ export const Header = (): ReactElement => {
             ))}
           </nav>
           <Button asChild size="default">
-            <SmoothAnchor href="#get-started">Start on Orbitaly</SmoothAnchor>
+            <SmoothAnchor href="https://app.orbitaly.de">Start on Orbitaly</SmoothAnchor>
           </Button>
         </div>
       </div>
@@ -245,7 +252,7 @@ export const Hero = (): ReactElement => {
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Button asChild size="lg">
-              <SmoothAnchor href="#get-started">Start on Orbitaly</SmoothAnchor>
+              <SmoothAnchor href="https://app.orbitaly.de">Start on Orbitaly</SmoothAnchor>
             </Button>
             <Button asChild size="lg" variant="secondary">
               <SmoothAnchor href="#how">How it works</SmoothAnchor>
@@ -414,7 +421,8 @@ export const Workflow = (): ReactElement => {
       <motion.div {...reveal} className="glass rounded-3xl p-8 sm:p-10" id="get-started">
         <h2 className="text-2xl font-semibold text-white sm:text-3xl">How to start on Orbitaly</h2>
         <p className="mt-3 max-w-3xl text-white/75">
-          Scroll through the setup flow. Each step completes as you move down. Your final Matrix ID will be:
+          Getting access is easy: request an account from the Orbitaly team or create one through an invitation link on this site.
+          Then log in with your Matrix client of choice. Your final Matrix ID will be:
           <span className="ml-1 font-semibold text-blue-200">@yourname:chat.orbitaly.de</span>
         </p>
         <WorkflowScroll steps={steps} />
