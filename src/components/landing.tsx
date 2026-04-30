@@ -407,13 +407,12 @@ const GraphSide = ({ centralized }: { centralized: boolean }): ReactElement => {
 
 export const Workflow = (): ReactElement => {
   const steps = [
-    "Choose a Matrix client: Element, FluffyChat, Cinny, or NeoChat.",
-    "Enter the homeserver URL: https://chat.orbitaly.de",
-    "Create your account with username and password.",
-    "Your Matrix ID becomes @yourname:chat.orbitaly.de. Share this ID so friends can find you.",
-    "Set up session verification or recovery if prompted.",
-    "Create DMs, private rooms, groups or communities.",
-    "Enable end-to-end encryption for private Matrix rooms where needed."
+    "Go to app.orbitaly.de.",
+    "Request an account or create one with your individual invitation link.",
+    "Create your account with your username and password.",
+    "Download a client of your choice, like Element X or FluffyChat.",
+    "Log in with the Orbitaly homeserver URL: https://chat.orbitaly.de.",
+    "Start using Orbitaly where your data belongs to you and only you."
   ];
 
   return (
@@ -421,8 +420,8 @@ export const Workflow = (): ReactElement => {
       <motion.div {...reveal} className="glass rounded-3xl p-8 sm:p-10" id="get-started">
         <h2 className="text-2xl font-semibold text-white sm:text-3xl">How to start on Orbitaly</h2>
         <p className="mt-3 max-w-3xl text-white/75">
-          Getting access is easy: request an account from the Orbitaly team or create one through an invitation link on this site.
-          Then log in with your Matrix client of choice. Your final Matrix ID will be:
+          Getting access is easy. Open app.orbitaly.de, request an account or use your invitation link, then sign in from your client of choice.
+          Your final Matrix ID will be:
           <span className="ml-1 font-semibold text-blue-200">@yourname:chat.orbitaly.de</span>
         </p>
         <WorkflowScroll steps={steps} />
@@ -519,6 +518,44 @@ export const Clients = (): ReactElement => {
           note="NeoChat install options are listed on the official KDE page."
         />
       </div>
+    </section>
+  );
+};
+
+export const ClientComparison = (): ReactElement => {
+  return (
+    <section className="section-wrap py-20">
+      <motion.div {...reveal} className="glass rounded-3xl p-8 sm:p-10">
+        <h2 className="text-2xl font-semibold text-white sm:text-3xl">Client comparison</h2>
+        <p className="mt-3 max-w-4xl text-white/75">
+          You can log in to all Matrix clients with your Orbitaly account by using the homeserver URL
+          <span className="ml-1 font-semibold text-blue-200">https://chat.orbitaly.de</span>. Chats sync across platforms, so you can use
+          FluffyChat on your phone and Cinny on your laptop with the same rooms and messages.
+        </p>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <motion.article {...reveal} className="rounded-2xl border border-blue-300/20 bg-blue-500/10 p-6">
+            <h3 className="text-lg font-semibold text-blue-200">Element X</h3>
+            <p className="mt-3 text-sm text-white/75">
+              Best for users who want a complete Matrix experience with strong feature coverage across web, desktop, and mobile.
+            </p>
+            <p className="mt-4 text-xs text-white/65">Use this when you want the most full-featured daily driver.</p>
+          </motion.article>
+          <motion.article {...reveal} className="rounded-2xl border border-cyan-300/20 bg-cyan-500/10 p-6">
+            <h3 className="text-lg font-semibold text-cyan-200">FluffyChat</h3>
+            <p className="mt-3 text-sm text-white/75">
+              Great for mobile-first messaging with a simple and friendly interface that is easy to use day to day.
+            </p>
+            <p className="mt-4 text-xs text-white/65">Use this when your phone is your primary client.</p>
+          </motion.article>
+          <motion.article {...reveal} className="rounded-2xl border border-violet-300/20 bg-violet-500/10 p-6">
+            <h3 className="text-lg font-semibold text-violet-200">Cinny</h3>
+            <p className="mt-3 text-sm text-white/75">
+              Excellent for a clean, lightweight web experience on desktop or laptop with a modern interface.
+            </p>
+            <p className="mt-4 text-xs text-white/65">Use this when you prefer a focused web client on laptop/desktop.</p>
+          </motion.article>
+        </div>
+      </motion.div>
     </section>
   );
 };

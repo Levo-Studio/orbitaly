@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import {
   Benefits,
+  ClientComparison,
   Clients,
   ComingSoon,
   FAQ,
@@ -23,6 +24,7 @@ export default function HomePage(): ReactElement {
       <SocialGraphComparison />
       <Workflow />
       <Clients />
+      <ClientComparison />
       <Benefits />
       <SecuritySection />
       <ComingSoon />
