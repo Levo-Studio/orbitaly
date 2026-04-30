@@ -39,6 +39,100 @@ const clientLinks: Array<{ name: string; href: string; description: string }> = 
   { name: "NeoChat", href: "https://apps.kde.org/neochat/", description: "KDE Matrix client · Desktop and mobile" }
 ];
 
+type ClientId = "element-x" | "fluffychat" | "cinny" | "neochat" | "schildichat";
+
+type QuizOption = {
+  label: string;
+  scores: Record<ClientId, number>;
+};
+
+type QuizQuestion = {
+  prompt: string;
+  options: QuizOption[];
+};
+
+const clientRecommendationMap: Record<ClientId, { name: string; reason: string; href: string }> = {
+  "element-x": {
+    name: "Element X",
+    reason: "Best all-round default for full Matrix features on web, desktop, and mobile.",
+    href: "https://element.io/download"
+  },
+  fluffychat: {
+    name: "FluffyChat",
+    reason: "Perfect for mobile-first, simple, and friendly daily messaging.",
+    href: "https://fluffychat.im"
+  },
+  cinny: {
+    name: "Cinny",
+    reason: "Great for a focused and lightweight web experience on laptop or desktop.",
+    href: "https://app.cinny.in"
+  },
+  neochat: {
+    name: "NeoChat",
+    reason: "Strong fit for KDE users who want a native desktop and mobile app.",
+    href: "https://apps.kde.org/neochat/"
+  },
+  schildichat: {
+    name: "SchildiChat",
+    reason: "Good if you want a classic Element-style flow with power-user controls.",
+    href: "https://schildi.chat"
+  }
+};
+
+const clientQuizQuestions: QuizQuestion[] = [
+  {
+    prompt: "Which device do you use most for chat?",
+    options: [
+      {
+        label: "Mostly phone",
+        scores: { "element-x": 1, fluffychat: 3, cinny: 0, neochat: 1, schildichat: 1 }
+      },
+      {
+        label: "Mostly laptop/desktop browser",
+        scores: { "element-x": 1, fluffychat: 0, cinny: 3, neochat: 1, schildichat: 1 }
+      },
+      {
+        label: "I switch across all devices",
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 1, schildichat: 2 }
+      }
+    ]
+  },
+  {
+    prompt: "What matters most to you?",
+    options: [
+      {
+        label: "Simple and easy UI",
+        scores: { "element-x": 1, fluffychat: 3, cinny: 2, neochat: 1, schildichat: 0 }
+      },
+      {
+        label: "Most complete feature set",
+        scores: { "element-x": 3, fluffychat: 0, cinny: 1, neochat: 1, schildichat: 2 }
+      },
+      {
+        label: "Lightweight and fast web usage",
+        scores: { "element-x": 1, fluffychat: 1, cinny: 3, neochat: 0, schildichat: 1 }
+      }
+    ]
+  },
+  {
+    prompt: "Which style fits you best?",
+    options: [
+      {
+        label: "Modern all-rounder",
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 0, schildichat: 1 }
+      },
+      {
+        label: "KDE/native desktop feeling",
+        scores: { "element-x": 0, fluffychat: 0, cinny: 1, neochat: 3, schildichat: 0 }
+      },
+      {
+        label: "Classic power-user layout",
+        scores: { "element-x": 1, fluffychat: 0, cinny: 1, neochat: 0, schildichat: 3 }
+      }
+    ]
+  }
+];
+
 const faqItems: Array<{ q: string; a: string }> = [
   { q: "What is Orbitaly?", a: "Orbitaly is a private, independent Matrix homeserver for chats, groups and communities." },
   { q: "What is a Matrix homeserver?", a: "A homeserver stores your Matrix identity and rooms while staying interoperable with other Matrix servers." },
@@ -523,8 +617,44 @@ export const Clients = (): ReactElement => {
 };
 
 export const ClientComparison = (): ReactElement => {
+  const [questionIndex, setQuestionIndex] = useState<number>(0);
+  const [scores, setScores] = useState<Record<ClientId, number>>({
+    "element-x": 0,
+    fluffychat: 0,
+    cinny: 0,
+    neochat: 0,
+    schildichat: 0
+  });
+
+  const currentQuestion = clientQuizQuestions[questionIndex];
+  const isQuizComplete = questionIndex >= clientQuizQuestions.length;
+  const bestClientId: ClientId = (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] as ClientId) ?? "element-x";
+  const bestClient = clientRecommendationMap[bestClientId];
+
+  const handleOptionSelect = (option: QuizOption): void => {
+    setScores((prevScores) => {
+      const nextScores: Record<ClientId, number> = { ...prevScores };
+      (Object.keys(option.scores) as ClientId[]).forEach((key) => {
+        nextScores[key] += option.scores[key];
+      });
+      return nextScores;
+    });
+    setQuestionIndex((prev) => prev + 1);
+  };
+
+  const resetQuiz = (): void => {
+    setQuestionIndex(0);
+    setScores({
+      "element-x": 0,
+      fluffychat: 0,
+      cinny: 0,
+      neochat: 0,
+      schildichat: 0
+    });
+  };
+
   return (
-    <section className="section-wrap py-20">
+    <section className="section-wrap py-24">
       <motion.div {...reveal} className="glass rounded-3xl p-8 sm:p-10">
         <h2 className="text-2xl font-semibold text-white sm:text-3xl">Client comparison</h2>
         <p className="mt-3 max-w-4xl text-white/75">
@@ -555,6 +685,67 @@ export const ClientComparison = (): ReactElement => {
             <p className="mt-4 text-xs text-white/65">Use this when you prefer a focused web client on laptop/desktop.</p>
           </motion.article>
         </div>
+
+        <motion.article
+          {...reveal}
+          className="mt-10 rounded-2xl border border-white/15 bg-white/[0.03] p-6 sm:p-8"
+        >
+          <h3 className="text-xl font-semibold text-white sm:text-2xl">Find your client</h3>
+          <p className="mt-2 text-sm text-white/70">
+            Answer a few quick multiple-choice questions and get your best fit. You can use any recommendation with the Orbitaly homeserver:
+            <span className="ml-1 font-medium text-blue-200">https://chat.orbitaly.de</span>.
+          </p>
+
+          <div className="mt-6 overflow-hidden">
+            <motion.div
+              key={isQuizComplete ? "result" : `q-${questionIndex}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            >
+              {isQuizComplete ? (
+                <div className="space-y-5">
+                  <p className="text-sm text-white/70">Your perfect client is:</p>
+                  <h4 className="text-2xl font-semibold text-blue-200">{bestClient.name}</h4>
+                  <p className="max-w-3xl text-sm text-white/75">{bestClient.reason}</p>
+                  <p className="text-sm text-white/75">
+                    Cross-platform sync works across clients, so you can chat on FluffyChat on your phone and continue in Cinny on your laptop with the same account and rooms.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild>
+                      <Link href={bestClient.href} target="_blank" rel="noreferrer">
+                        Open {bestClient.name} <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    <Button type="button" variant="secondary" onClick={resetQuiz}>
+                      Try again
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-5">
+                  <p className="text-xs uppercase tracking-wide text-white/50">
+                    Question {questionIndex + 1} of {clientQuizQuestions.length}
+                  </p>
+                  <h4 className="text-lg font-semibold text-white sm:text-xl">{currentQuestion.prompt}</h4>
+                  <div className="grid gap-3">
+                    {currentQuestion.options.map((option) => (
+                      <Button
+                        key={option.label}
+                        type="button"
+                        variant="secondary"
+                        className="justify-start text-left whitespace-normal"
+                        onClick={() => handleOptionSelect(option)}
+                      >
+                        {option.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </motion.article>
       </motion.div>
     </section>
   );
