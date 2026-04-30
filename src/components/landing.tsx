@@ -717,49 +717,37 @@ export const FindYourClient = (): ReactElement => {
 
   return (
     <section className="section-wrap pb-24">
-      <motion.div
-        {...reveal}
-        className="relative overflow-hidden rounded-3xl border border-blue-300/20 bg-[linear-gradient(180deg,rgba(24,35,70,0.5),rgba(9,13,28,0.85))] p-8 shadow-[0_18px_60px_rgba(15,44,112,0.35)] sm:p-10"
-      >
-        <motion.div
+      <div className="client-finder-shell relative overflow-hidden rounded-3xl border border-blue-300/20 bg-[linear-gradient(180deg,rgba(24,35,70,0.5),rgba(9,13,28,0.85))] p-8 shadow-[0_18px_60px_rgba(15,44,112,0.35)] sm:p-10">
+        <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl"
-          animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.9, 0.6] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          className="client-finder-glow-a pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl"
         />
-        <motion.div
+        <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-20 -left-20 h-52 w-52 rounded-full bg-violet-500/20 blur-3xl"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="client-finder-glow-b pointer-events-none absolute -bottom-20 -left-20 h-52 w-52 rounded-full bg-violet-500/20 blur-3xl"
         />
-        <motion.article className="relative rounded-2xl border border-white/15 bg-[#050a19]/65 p-6 sm:p-8">
+        <article className="relative rounded-2xl border border-white/15 bg-[#050a19]/65 p-6 sm:p-8">
           <h3 className="text-xl font-semibold text-white sm:text-2xl">Find your client</h3>
           <p className="mt-2 text-sm text-white/70">
             Answer a few simple questions and get your best match. You can use any recommendation with the Orbitaly login URL:
             <span className="ml-1 font-medium text-blue-200">https://chat.orbitaly.de</span>.
           </p>
           <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-white/10">
-            <motion.div
-              className="relative h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
-              animate={{ width: progressWidth }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+            <div
+              className="client-finder-progress relative h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
+              style={{ width: progressWidth }}
             >
-              <motion.span
+              <span
                 aria-hidden
-                className="absolute inset-y-0 block w-20 bg-white/35 blur-sm"
-                animate={{ x: ["-130%", "420%"] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
+                className="client-finder-progress-shimmer absolute inset-y-0 block w-20 bg-white/35 blur-sm"
               />
-            </motion.div>
+            </div>
           </div>
 
           <div className="mt-6 pb-2">
-            <motion.div
+            <div
               key={isQuizComplete ? "result" : `q-${questionIndex}`}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="client-finder-step-in"
             >
               {isQuizComplete ? (
                 <div className="space-y-5">
@@ -788,12 +776,7 @@ export const FindYourClient = (): ReactElement => {
                   <h4 className="text-lg font-semibold text-white sm:text-xl">{currentQuestion.prompt}</h4>
                   <div className="grid gap-3">
                     {currentQuestion.options.map((option) => (
-                      <motion.div
-                        key={option.label}
-                        whileHover={{ y: -2, scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                      >
+                      <div key={option.label} className="client-finder-option">
                         <Button
                           type="button"
                           variant="secondary"
@@ -802,15 +785,15 @@ export const FindYourClient = (): ReactElement => {
                         >
                           {option.label}
                         </Button>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
               )}
-            </motion.div>
+            </div>
           </div>
-        </motion.article>
-      </motion.div>
+        </article>
+      </div>
     </section>
   );
 };
