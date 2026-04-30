@@ -54,27 +54,27 @@ type QuizQuestion = {
 const clientRecommendationMap: Record<ClientId, { name: string; reason: string; href: string }> = {
   "element-x": {
     name: "Element X",
-    reason: "Best all-round default for full Matrix features on web, desktop, and mobile.",
+    reason: "Great all-round choice if you use phone and laptop and want everything in one app.",
     href: "https://element.io/download"
   },
   fluffychat: {
     name: "FluffyChat",
-    reason: "Perfect for mobile-first, simple, and friendly daily messaging.",
+    reason: "Best pick for simple day-to-day chatting, especially if you mostly use your phone.",
     href: "https://fluffychat.im"
   },
   cinny: {
     name: "Cinny",
-    reason: "Great for a focused and lightweight web experience on laptop or desktop.",
+    reason: "Best if you prefer a clean, light chat app in your browser on laptop or desktop.",
     href: "https://app.cinny.in"
   },
   neochat: {
     name: "NeoChat",
-    reason: "Strong fit for KDE users who want a native desktop and mobile app.",
+    reason: "Good if you want a straightforward app-like feel on desktop and mobile.",
     href: "https://apps.kde.org/neochat/"
   },
   schildichat: {
     name: "SchildiChat",
-    reason: "Good if you want a classic Element-style flow with power-user controls.",
+    reason: "Good if you like a classic chat layout with extra customization options.",
     href: "https://schildi.chat"
   }
 };
@@ -85,15 +85,15 @@ const clientQuizQuestions: QuizQuestion[] = [
     options: [
       {
         label: "On my phone",
-        scores: { "element-x": 1, fluffychat: 3, cinny: 0, neochat: 1, schildichat: 1 }
+        scores: { "element-x": 0, fluffychat: 4, cinny: 0, neochat: 1, schildichat: 1 }
       },
       {
         label: "On my laptop/desktop",
-        scores: { "element-x": 1, fluffychat: 0, cinny: 3, neochat: 1, schildichat: 1 }
+        scores: { "element-x": 1, fluffychat: 0, cinny: 4, neochat: 1, schildichat: 1 }
       },
       {
         label: "On both equally",
-        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 1, schildichat: 2 }
+        scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 1, schildichat: 1 }
       }
     ]
   },
@@ -102,11 +102,11 @@ const clientQuizQuestions: QuizQuestion[] = [
     options: [
       {
         label: "Very simple and easy",
-        scores: { "element-x": 1, fluffychat: 3, cinny: 2, neochat: 1, schildichat: 0 }
+        scores: { "element-x": 0, fluffychat: 4, cinny: 2, neochat: 1, schildichat: 0 }
       },
       {
-        label: "Most features",
-        scores: { "element-x": 3, fluffychat: 0, cinny: 1, neochat: 1, schildichat: 2 }
+        label: "Everything in one app",
+        scores: { "element-x": 4, fluffychat: 0, cinny: 1, neochat: 1, schildichat: 2 }
       },
       {
         label: "Fast and lightweight",
@@ -115,18 +115,18 @@ const clientQuizQuestions: QuizQuestion[] = [
     ]
   },
   {
-    prompt: "Which look and feel do you prefer?",
+    prompt: "What style do you like most?",
     options: [
       {
-        label: "Modern and balanced",
+        label: "Modern and clean",
         scores: { "element-x": 3, fluffychat: 1, cinny: 1, neochat: 0, schildichat: 1 }
       },
       {
-        label: "Native KDE-style app",
-        scores: { "element-x": 0, fluffychat: 0, cinny: 1, neochat: 3, schildichat: 0 }
+        label: "Simple app style",
+        scores: { "element-x": 1, fluffychat: 2, cinny: 1, neochat: 2, schildichat: 0 }
       },
       {
-        label: "Classic power-user style",
+        label: "Classic style with more options",
         scores: { "element-x": 1, fluffychat: 0, cinny: 1, neochat: 0, schildichat: 3 }
       }
     ]
@@ -667,7 +667,9 @@ export const FindYourClient = (): ReactElement => {
   const currentQuestion = clientQuizQuestions[questionIndex];
   const isQuizComplete = questionIndex >= clientQuizQuestions.length;
   const progressWidth = `${Math.min((questionIndex / clientQuizQuestions.length) * 100, 100)}%`;
-  const bestClientId: ClientId = (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] as ClientId) ?? "element-x";
+  const clientPriority: ClientId[] = ["fluffychat", "cinny", "element-x", "neochat", "schildichat"];
+  const bestClientId: ClientId =
+    clientPriority.reduce((best, current) => (scores[current] > scores[best] ? current : best), clientPriority[0]) ?? "element-x";
   const bestClient = clientRecommendationMap[bestClientId];
 
   const handleOptionSelect = (option: QuizOption): void => {
@@ -713,7 +715,7 @@ export const FindYourClient = (): ReactElement => {
         <motion.article className="relative rounded-2xl border border-white/15 bg-[#050a19]/65 p-6 sm:p-8">
           <h3 className="text-xl font-semibold text-white sm:text-2xl">Find your client</h3>
           <p className="mt-2 text-sm text-white/70">
-            Answer a few simple questions and get your best match. You can use any recommendation with the Orbitaly homeserver:
+            Answer a few simple questions and get your best match. You can use any recommendation with the Orbitaly login URL:
             <span className="ml-1 font-medium text-blue-200">https://chat.orbitaly.de</span>.
           </p>
           <div className="mt-5 h-2 w-full rounded-full bg-white/10">
