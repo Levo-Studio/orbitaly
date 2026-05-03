@@ -1,10 +1,18 @@
 <p align="center">
-  <img src="./public/orbital-logo-rectangle-120.png" alt="Orbitaly Logo" width="120" height="120" />
+  <img src="./public/orbital-logo-round.png" alt="Orbitaly Round Logo" width="140" height="140" />
 </p>
 
 <h1 align="center">Orbitaly</h1>
-<p align="center"><strong>Independent Matrix-based Communication</strong></p>
-<p align="center"><strong>A Product by Levo Studio</strong></p>
+
+<p align="center">
+  <a href="https://chat.orbitaly.de"><img src="https://img.shields.io/badge/Status-Live-22c55e?style=for-the-badge" alt="Status Live" /></a>
+  <img src="https://img.shields.io/badge/Protocol-Matrix-0dbd8b?style=for-the-badge" alt="Matrix Protocol" />
+  <img src="https://img.shields.io/badge/Made%20by-Levo%20Studio-2563eb?style=for-the-badge" alt="Made by Levo Studio" />
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=24&pause=1300&center=true&vCenter=true&width=820&lines=Independent+Matrix-based+Communication;Own+your+identity+with+%40username%3Achat.orbitaly.de;Open+protocol.+Independent+orbit." alt="Orbitaly animated tagline" />
+</p>
 
 Orbitaly is an independent Matrix homeserver and ecosystem for people who want modern messaging without platform lock-in.
 
@@ -42,7 +50,7 @@ After registration, your Matrix ID looks like this:
 
 This full identifier is what other people use to find and add you.
 
-## Getting Started
+## Start Using Orbitaly
 
 1. Open any Matrix client
 2. Use homeserver URL: `https://chat.orbitaly.de`
@@ -82,13 +90,6 @@ Current focus areas:
 - Framer Motion
 - GSAP ScrollTrigger
 - lucide-react
-
-## Local Development
-
-```bash
-pnpm install
-pnpm dev
-```
 
 ## License
 
