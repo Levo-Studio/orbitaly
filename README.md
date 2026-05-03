@@ -3,49 +3,51 @@
 </p>
 
 <h1 align="center">Orbitaly</h1>
+<p align="center"><strong>Independent Matrix-based Communication</strong></p>
+<p align="center"><strong>A Product by Levo Studio</strong></p>
 
-<p align="center"><strong>Independent Matrix-based communication.</strong></p>
+Orbitaly is an independent Matrix homeserver and ecosystem for people who want modern messaging without platform lock-in.
 
-<h2 align="center"><strong>A PRODUCT BY LEVO STUDIO</strong></h2>
-
-Orbitaly is a private, independent Matrix-based communication platform for friend groups, communities, and teams that want more control than closed social apps.
+Instead of one closed app controlling everything, Orbitaly gives you a sovereign Matrix identity (`@username:chat.orbitaly.de`) that works across compatible clients.
 
 This repository contains the official Orbitaly website and landing page.
 
-- Public repository: [github.com/levo-studio/orbitaly](https://github.com/levo-studio/orbitaly)
+- Repository: [github.com/levo-studio/orbitaly](https://github.com/levo-studio/orbitaly)
 - Homeserver: [chat.orbitaly.de](https://chat.orbitaly.de)
 
 ## What Orbitaly Is
 
-Orbitaly is a Matrix homeserver.
+Orbitaly is a Matrix homeserver operated by Levo Studio.
 
-That means your account identity lives on Orbitaly, while you choose your preferred Matrix client.
+That means:
 
-Orbitaly currently does **not** have its own custom client.
+- Your account identity is hosted on Orbitaly
+- You are free to choose your preferred Matrix client
+- You can communicate across the wider Matrix network
 
-## Matrix in One Minute
+Orbitaly currently does not ship a dedicated custom client yet.
+
+## Why Matrix
 
 Matrix is an open communication protocol.
 
-Like email, different apps and different servers can still interoperate on one shared network.
+Like email, different clients and servers can communicate with each other.
+This allows interoperability, long-term portability, and less dependence on a single provider.
 
-- Closed platforms: one provider controls identity, policy, and ecosystem rules
-- Matrix: open protocol, independent servers, user choice, interoperability
+## Your Orbitaly ID
 
-## Your Matrix ID
-
-When you create an account on Orbitaly, your ID looks like:
+After registration, your Matrix ID looks like this:
 
 `@yourname:chat.orbitaly.de`
 
-This full ID is how people add you as a contact in Matrix clients.
+This full identifier is what other people use to find and add you.
 
-## Start Using Orbitaly
+## Getting Started
 
-1. Open a Matrix client
-2. Enter homeserver URL: `https://chat.orbitaly.de`
-3. Create account or sign in
-4. Share your Matrix ID (`@user:chat.orbitaly.de`) so others can find you
+1. Open any Matrix client
+2. Use homeserver URL: `https://chat.orbitaly.de`
+3. Create an account or sign in
+4. Share your Matrix ID with friends, communities, or teams
 
 Recommended clients:
 
@@ -54,24 +56,24 @@ Recommended clients:
 - [Cinny Web](https://app.cinny.in)
 - [NeoChat](https://apps.kde.org/neochat/)
 
-## Infrastructure & Privacy Notes
+## Privacy & Infrastructure
 
 - Hosted in Germany (Falkenstein)
-- DSGVO/GDPR-oriented operation
-- Native Matrix encrypted rooms can protect message content end-to-end when enabled
-- Privacy-focused, not anonymous by default
+- GDPR/DSGVO-oriented operation
+- End-to-end encrypted Matrix rooms available where supported and enabled
+- Privacy-focused, but not anonymous by default
 
 ## Project Status
 
-Orbitaly is live and evolving.
+Orbitaly is live and continuously evolving.
 
-Current focus:
+Current focus areas:
 
-- Better onboarding flow
-- Invite-oriented access and setup UX
-- Custom Orbitaly web experience
+- Better onboarding
+- Invite-based access flow
+- Extended Orbitaly web experience
 
-## Stack (Website)
+## Tech Stack (Website)
 
 - Next.js (App Router)
 - TypeScript
@@ -88,7 +90,17 @@ pnpm install
 pnpm dev
 ```
 
+## License
+
+This project is currently released under a proprietary license.
+See [LICENSE](./LICENSE) for full terms.
+
+## Copyright
+
+Copyright (c) Levo Studio
+Copyright (c) Julius Grimm
+All rights reserved.
+
 ---
 
-Orbitaly — Independent communication · Open protocol · Your orbit  
-Made with ❤️ in Germany by Julius
+Developed with ❤️ by Julius Grimm
