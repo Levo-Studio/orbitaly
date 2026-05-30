@@ -17,7 +17,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: orbitaly
-          image: ghcr.io/levo-studio/orbitaly:latest # {"$imagepolicy": "flux-system:orbitaly"}
+          image: ghcr.io/levo-studio/orbitaly:build-2 # {"$imagepolicy": "flux-system:orbitaly"}
           imagePullPolicy: Always
           ports:
             - containerPort: 3017
