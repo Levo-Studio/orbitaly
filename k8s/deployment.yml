@@ -47,7 +47,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   tls:
     - hosts:
         - orbitaly.de
